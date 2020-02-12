@@ -1,7 +1,8 @@
 from flask import Flask
 
 from learning_center.blueprints.admin import admin_bp
-from learning_center.extensions import db, toolbar
+from learning_center.extensions import db, migrate, toolbar
+from learning_center.models import User
 from learning_center.settings import Config
 
 
@@ -16,6 +17,7 @@ def create_app(config=Config):
 
 def register_extensions(app):
     db.init_app(app)
+    migrate.init_app(app, db)
     toolbar.init_app(app)
 
 

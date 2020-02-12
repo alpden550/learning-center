@@ -14,12 +14,17 @@ class UserView(ModelView):
 
 
 class GroupView(ModelView):
+    column_list = (
+        'title', 'status', 'course', 'started_at', 'max_applicants', 'numbers_of_applicants',
+    )
     column_labels = {
         'title': 'Курс',
         'status': 'Статус курса',
         'course': 'Предмет',
         'started_at': 'Старт',
         'applicants': 'Участники',
+        'max_applicants': 'Макс. человек',
+        'numbers_of_applicants': 'Набрано',
     }
 
 

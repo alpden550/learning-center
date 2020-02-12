@@ -22,7 +22,7 @@ class CRUDMixin:
 
 class User(CRUDMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(EmailType, unique=True, index=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
@@ -33,7 +33,7 @@ class User(CRUDMixin, db.Model):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f'<User {self.uid} – {self.name}>'
+        return f'<User {self.uid} – {self.username}>'
 
 
 class Group(CRUDMixin, db.Model):

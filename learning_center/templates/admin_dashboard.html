@@ -8,28 +8,27 @@
 {% block container %}
 <div class="row">
     <div class="col-md-6">
+
         <div class="well">
 
             <h2>Заявки</h2>
-            <p>150 всего 95 распределены 65 не распределены</p>
+            <p>{{ distributed }} всего, {{ distributed-counted }} распределены, {{ counted }} не распределены</p>
 
             <h3>Новые заявки</h3>
             <table class="table">
-                <tr>
-                    <td><a href="/">Vue js январь</a></td>
-                    <td>8 / 10 набрано</td>
-                    <td>есть места</td>
-                </tr>
-                <tr>
-                    <td><a href="/">Flask февраль</a></td>
-                    <td>10 / 10 набрано</td>
-                    <td>нет мест</td>
-                </tr>
-                <tr>
-                    <td><a href="/">Django февраль</a></td>
-                    <td>6 / 10 набрано</td>
-                    <td>есть места</td>
-                </tr>
+                {% for group in new_groups %}
+                    <tr>
+                        <td><a href="group/edit/?id={{ group.uid }}">{{ group.title }}</a></td>
+                        <td>{{ group.numbers_of_applicants }} / {{ group.max_applicants }} набрано</td>
+                        <td>
+                            {% if group.numbers_of_applicants < group.max_applicants|int %}
+                                    Есть места
+                            {% else %}
+                                Нет мест
+                            {% endif %}
+                        </td></group.max_applicants>
+                    </tr>
+                {% endfor %}
             </table>
             <br>
             <a href="" class></a>
@@ -41,21 +40,20 @@
             <h2>Группы</h2>
             <br>
             <table class="table">
-                <tr>
-                    <td><a href="/">Vue js январь</a></td>
-                    <td>8 / 10 набрано</td>
-                    <td>есть места</td>
-                </tr>
-                <tr>
-                    <td><a href="/">Flask февраль</a></td>
-                    <td>10 / 10 набрано</td>
-                    <td>нет мест</td>
-                </tr>
-                <tr>
-                    <td><a href="/">Django февраль</a></td>
-                    <td>6 / 10 набрано</td>
-                    <td>есть места</td>
-                </tr>
+                {% for group in groups %}
+                    <tr>
+                        <td><a href="group/edit/?id={{ group.uid }}">{{group.title}}</a></td>
+                        <td>{{ group.numbers_of_applicants }} / {{ group.max_applicants }} набрано</td>
+                        <td>
+                            {% if group.numbers_of_applicants < group.max_applicants|int %}
+                                    Есть места
+                            {% else %}
+                                    Нет мест
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
             </table>
 
         </div>

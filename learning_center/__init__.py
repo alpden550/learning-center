@@ -1,11 +1,10 @@
 import click
 from flask import Flask
-from flask_admin.contrib.sqla import ModelView
 
 from learning_center.extensions import admin, db, migrate
 from learning_center.models import Applicant, Group, User
 from learning_center.settings import Config
-from learning_center.admin import UserView
+from learning_center.admin import UserView, GroupView, ApplicantView
 
 
 def create_app(config=Config):
@@ -16,8 +15,8 @@ def create_app(config=Config):
     register_commands(app)
 
     admin.add_view(UserView(User, db.session, name='Пользователи'))
-    admin.add_view(ModelView(Group, db.session, name='Группы'))
-    admin.add_view(ModelView(Applicant, db.session, name='Заявки'))
+    admin.add_view(GroupView(Group, db.session, name='Группы'))
+    admin.add_view(ApplicantView(Applicant, db.session, name='Заявки'))
 
     return app
 

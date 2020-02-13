@@ -14,10 +14,7 @@ def create_app(config=Config):
     register_extensions(app)
     register_commands(app)
     register_routes(app)
-
-    admin.add_view(UserView(User, db.session, name='Пользователи'))
-    admin.add_view(GroupView(Group, db.session, name='Группы'))
-    admin.add_view(ApplicantView(Applicant, db.session, name='Заявки'))
+    register_admins()
 
     return app
 
@@ -32,6 +29,12 @@ def register_routes(app):
     @app.route('/login')
     def login():
         return render_template('admin/auth.html')
+
+
+def register_admins():
+    admin.add_view(UserView(User, db.session, name='Пользователи'))
+    admin.add_view(GroupView(Group, db.session, name='Группы'))
+    admin.add_view(ApplicantView(Applicant, db.session, name='Заявки'))
 
 
 def register_commands(app):

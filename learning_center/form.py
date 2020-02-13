@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField
+from wtforms import BooleanField, PasswordField, StringField
 
 
 class LoginForm(FlaskForm):
-    username = StringField(label='')
-    password = PasswordField(label='')
+    username = StringField()
+    password = PasswordField()
+    is_remembered = BooleanField(label='Запомнить меня')

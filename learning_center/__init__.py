@@ -1,5 +1,5 @@
 import click
-from flask import Flask
+from flask import Flask, render_template
 
 from learning_center.extensions import admin, db, migrate
 from learning_center.models import Applicant, Group, User
@@ -13,6 +13,7 @@ def create_app(config=Config):
 
     register_extensions(app)
     register_commands(app)
+    register_routes(app)
 
     admin.add_view(UserView(User, db.session, name='Пользователи'))
     admin.add_view(GroupView(Group, db.session, name='Группы'))
@@ -25,6 +26,12 @@ def register_extensions(app):
     db.init_app(app)
     admin.init_app(app)
     migrate.init_app(app, db)
+
+
+def register_routes(app):
+    @app.route('/login')
+    def login():
+        return render_template('admin/auth.html')
 
 
 def register_commands(app):

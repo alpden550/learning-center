@@ -58,11 +58,7 @@ class Group(CRUDMixin, db.Model):
     course = db.Column(ChoiceType(COURSE_TYPES), nullable=False, default='PYTHON')
     started_at = db.Column(db.Date)
     applicants = db.relationship('Applicant', back_populates='group')
-    max_applicants = db.Column(
-        db.Enum('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'),
-        nullable=False,
-        default='10',
-    )
+    max_applicants = db.Column(db.Integer, nullable=False, default=10)
 
     @property
     def numbers_of_applicants(self):

@@ -48,7 +48,7 @@ class DashboardView(AdminIndexView):
         distributed = len(appliciants)
         counted = [appliciant.status.code for appliciant in appliciants].count('NEW')
         return self.render(
-            'admin_dashboard.html',
+            'admin/admin_dashboard.html',
             groups=groups,
             new_groups=groups[:3],
             distributed=distributed,

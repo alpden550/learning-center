@@ -1,5 +1,8 @@
+from flask import render_template, session
 from flask_admin import AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
+
+from learning_center.form import LoginForm
 
 
 class UserView(ModelView):
@@ -54,3 +57,9 @@ class DashboardView(AdminIndexView):
             distributed=distributed,
             counted=counted,
         )
+
+    @expose('/login', methods=['GET', 'POST'])
+    def login(self):
+        print(session)
+        form = LoginForm()
+        return render_template('admin/auth.html', form=form)

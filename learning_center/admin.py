@@ -1,12 +1,17 @@
-from flask import render_template, session, redirect, url_for, request
+from flask import flash, redirect, render_template, request, url_for
 from flask_admin import AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
-from flask_login import current_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 from learning_center.form import LoginForm
 
 
-class UserView(ModelView):
+class Forbidden:
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+
+class UserView(Forbidden, ModelView):
     column_exclude_list = ('password',)
     column_labels = {
         'username': 'Username',
@@ -17,7 +22,7 @@ class UserView(ModelView):
     edit_modal = True
 
 
-class GroupView(ModelView):
+class GroupView(Forbidden, ModelView):
     column_list = (
         'title', 'status', 'course', 'started_at', 'max_applicants', 'numbers_of_applicants',
     )
@@ -32,7 +37,7 @@ class GroupView(ModelView):
     }
 
 
-class ApplicantView(ModelView):
+class ApplicantView(Forbidden, ModelView):
     column_labels = {
         'name': 'Имя',
         'phone': 'Телефон',
@@ -44,6 +49,7 @@ class ApplicantView(ModelView):
 
 class DashboardView(AdminIndexView):
 
+    @login_required
     @expose('/')
     def index(self):
         from learning_center.models import Group, Applicant  # noqa:WPS433
@@ -62,12 +68,20 @@ class DashboardView(AdminIndexView):
     @expose('/login', methods=['GET', 'POST'])
     def login(self):
         from learning_center.models import User  # noqa:WPS433
-        print(session)
-        print(current_user.is_authenticated)
         if current_user.is_authenticated:
-            return redirect(url_for('index'))
+            return redirect(url_for('admin.index'))
         form = LoginForm()
         if request.method == 'POST':
             user = User.query.filter_by(username=form.username.data).first()
-            print(user)
+            if user is None or not user.validate_password(form.password.data):
+                flash('Неверное имя пользователя или пароль')
+                return redirect(url_for('admin.login'))
+            login_user(user, remember=form.is_remembered.data)
+            return redirect(url_for('admin.index'))
+
         return render_template('admin/auth.html', form=form)
+
+    @expose('/logout')
+    def logout(self):
+        logout_user()
+        return redirect(url_for('admin.index'))

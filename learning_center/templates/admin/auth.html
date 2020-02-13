@@ -18,9 +18,13 @@
             <p class="mb-4">Что-то мы вас не узнали</p>
           </div>
 
-          {% for field, error in form.errors.items() %}
-            <p class="alert alert-danger text-center">Неверный логин или пароль {{ error }}</p>
-          {% endfor %}
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <p class="alert alert-danger text-center">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
 
           <div class="form-label-group">
             <p class="text-muted">Электропочта</p>

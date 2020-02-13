@@ -11,3 +11,5 @@ csrf = CSRFProtect()
 db = SQLAlchemy()
 login = LoginManager()
 migrate = Migrate()
+
+login.login_view = 'admin.login'

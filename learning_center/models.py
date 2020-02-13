@@ -34,7 +34,7 @@ class User(UserMixin, CRUDMixin, db.Model):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f'<User {self.uid} – {self.username}>'
+        return f'<User {self.id} – {self.username}>'
 
 
 class Group(CRUDMixin, db.Model):

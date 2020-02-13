@@ -1,6 +1,7 @@
-from flask import render_template, session
+from flask import render_template, session, redirect, url_for, request
 from flask_admin import AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
+from flask_login import current_user
 
 from learning_center.form import LoginForm
 
@@ -60,6 +61,13 @@ class DashboardView(AdminIndexView):
 
     @expose('/login', methods=['GET', 'POST'])
     def login(self):
+        from learning_center.models import User  # noqa:WPS433
         print(session)
+        print(current_user.is_authenticated)
+        if current_user.is_authenticated:
+            return redirect(url_for('index'))
         form = LoginForm()
+        if request.method == 'POST':
+            user = User.query.filter_by(username=form.username.data).first()
+            print(user)
         return render_template('admin/auth.html', form=form)

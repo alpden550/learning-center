@@ -22,7 +22,7 @@ class CRUDMixin:
 
 
 class User(UserMixin, CRUDMixin, db.Model):
-    uid = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(EmailType, unique=True, index=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)

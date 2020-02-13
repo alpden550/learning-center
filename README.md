@@ -1,6 +1,6 @@
 # CRM For Learning Center
 
-[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d27bd63df9caffbc2a73/maintainability)](https://codeclimate.com/github/alpden550/learning-center/maintainability) [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
 Flask app for learnig center's CRM
 

@@ -2,7 +2,7 @@ import click
 from flask import Flask, render_template, session
 
 from learning_center.admin import ApplicantView, GroupView, UserView
-from learning_center.extensions import admin, csrf, db, migrate, login
+from learning_center.extensions import admin, csrf, db, login, migrate
 from learning_center.form import LoginForm
 from learning_center.models import Applicant, Group, User
 from learning_center.settings import Config

@@ -13,3 +13,4 @@ login = LoginManager()
 migrate = Migrate()
 
 login.login_view = 'admin.login'
+login.login_message = 'Авторизуйтесь для доступа к CRM'

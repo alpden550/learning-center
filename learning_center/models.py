@@ -78,7 +78,7 @@ class Applicant(CRUDMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     phone = db.Column(db.String)
-    email = db.Column(EmailType, unique=True, index=True, nullable=False)
+    email = db.Column(EmailType, unique=True, nullable=False)
     status = db.Column(ChoiceType(STATUS_TYPES), nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('group.uid'))
     group = db.relationship('Group', back_populates='applicants')

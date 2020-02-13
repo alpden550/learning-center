@@ -53,14 +53,15 @@ class DashboardView(AdminIndexView):
     @expose('/')
     def index(self):
         from learning_center.models import Group, Applicant  # noqa:WPS433
-        groups = Group.query.all()
+        groups = Group.query
         appliciants = Applicant.query.all()
         distributed = len(appliciants)
         counted = [appliciant.status.code for appliciant in appliciants].count('NEW')
+        new_groups = groups.order_by(Group.uid.desc()).all()
         return self.render(
             'admin/admin_dashboard.html',
-            groups=groups,
-            new_groups=groups[:3],
+            groups=groups.all(),
+            new_groups=new_groups[:3],
             distributed=distributed,
             counted=counted,
         )

@@ -127,5 +127,4 @@ dmypy.json
 
 .vscode/
 .DS_Store
-learning_center/data.sqlite
-data.sqlite
+*.sqlite

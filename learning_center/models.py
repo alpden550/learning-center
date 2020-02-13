@@ -1,9 +1,10 @@
+from flask_login import UserMixin
 from sqlalchemy import event
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy_utils import ChoiceType, EmailType, PhoneNumber
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from learning_center.extensions import db
+from learning_center.extensions import db, login
 
 
 class CRUDMixin:
@@ -20,7 +21,7 @@ class CRUDMixin:
         db.session.commit()
 
 
-class User(CRUDMixin, db.Model):
+class User(UserMixin, CRUDMixin, db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(EmailType, unique=True, index=True, nullable=False)
@@ -98,3 +99,8 @@ def hash_user_password(target, value, *args):  # noqa:WPS110
 @event.listens_for(Applicant.phone, 'set', retval=True)
 def format_phone(turget, number, *args):
     return PhoneNumber(number, region='RU').international
+
+
+@login.user_loader
+def load_user(uid):
+    return User.query.get(int(uid))

@@ -2,7 +2,7 @@ import click
 from flask import Flask, render_template, session
 
 from learning_center.admin import ApplicantView, GroupView, UserView
-from learning_center.extensions import admin, csrf, db, migrate
+from learning_center.extensions import admin, csrf, db, migrate, login
 from learning_center.form import LoginForm
 from learning_center.models import Applicant, Group, User
 from learning_center.settings import Config
@@ -24,6 +24,7 @@ def register_extensions(app):
     admin.init_app(app)
     migrate.init_app(app, db)
     csrf.init_app(app)
+    login.init_app(app)
 
 
 def register_admins():
